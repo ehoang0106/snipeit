@@ -1,0 +1,56 @@
+# Compose file for production.
+
+volumes:
+  db_data:
+  storage:
+  npm_data:
+  npm_ssl:
+  npm_db:
+
+networks:
+  snipeit_network:
+    driver: bridge
+
+services:
+  mysql:
+    image: mysql:8.0
+    restart: always
+    volumes:
+      - db_data:/var/lib/mysql
+    networks:
+      - snipeit_network
+    environment:
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD:-rootpassword}
+      MYSQL_DATABASE: ${MYSQL_DATABASE:-snipeit}
+      MYSQL_USER: ${MYSQL_USER:-snipeit}
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD:-snipeitpassword}
+    command: --default-authentication-plugin=mysql_native_password
+
+  app:
+    image: snipe/snipe-it:${APP_VERSION:-latest}
+    restart: always
+    volumes:
+      - storage:/var/lib/snipeit
+    env_file:
+      - .env
+    networks:
+      - snipeit_network
+    expose:
+      - "80"
+    depends_on:
+      - mysql
+
+  nginx-proxy-manager:
+    image: jc21/nginx-proxy-manager:latest
+    restart: always
+    ports:
+      - "80:80"      # HTTP
+      - "443:443"    # HTTPS
+      - "81:81"      # Admin Web UI
+    volumes:
+      - npm_data:/data
+      - npm_ssl:/etc/letsencrypt
+    networks:
+      - snipeit_network
+    environment:
+      DB_SQLITE_FILE: "/data/database.sqlite"

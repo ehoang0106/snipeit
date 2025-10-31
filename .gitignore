@@ -1,0 +1,44 @@
+# Environment files (contains sensitive credentials)
+.env
+.env.*
+!.env.example
+
+# Docker volumes and data
+storage/
+db_data/
+npm_data/
+npm_ssl/
+npm_db/
+
+# Terraform files
+terraform/.terraform/
+terraform/*.tfstate
+terraform/*.tfstate.*
+terraform/*.tfvars
+terraform/*.tfvars.json
+terraform/crash.log
+terraform/crash.*.log
+terraform/.terraformrc
+terraform/terraform.rc
+
+# SSH keys
+*.pem
+*.key
+
+# Log files
+*.log
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# IDE files
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# Backup files
+*.bak
+*.backup
