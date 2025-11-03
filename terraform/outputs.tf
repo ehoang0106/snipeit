@@ -18,16 +18,6 @@ output "security_group_id" {
   value       = aws_security_group.snipeit_sg.id
 }
 
-output "npm_admin_url" {
-  description = "Nginx Proxy Manager admin URL"
-  value       = "http://${aws_instance.snipeit.public_ip}:81"
-}
-
-output "snipeit_url" {
-  description = "Snipe-IT application URL"
-  value       = "https://${var.domain_name}"
-}
-
 output "ssh_command" {
   description = "SSH command to connect to the instance"
   value       = "ssh -i ~/.ssh/${var.key_name}.pem ubuntu@${aws_instance.snipeit.public_ip}"

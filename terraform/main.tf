@@ -155,20 +155,6 @@ resource "aws_instance" "snipeit" {
     volume_type = "gp3"
   }
 
-  user_data = templatefile("${path.module}/user-data.sh", {
-    domain_name         = var.domain_name
-    mysql_database      = var.mysql_database
-    mysql_user          = var.mysql_user
-    mysql_password      = var.mysql_password
-    mysql_root_password = var.mysql_root_password
-    app_key             = var.app_key
-    mail_host           = var.mail_host
-    mail_port           = var.mail_port
-    mail_username       = var.mail_username
-    mail_password       = var.mail_password
-    mail_from_addr      = var.mail_from_addr
-  })
-
   tags = {
     Name = "snipeit-server"
   }
