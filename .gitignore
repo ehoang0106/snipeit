@@ -20,7 +20,7 @@ terraform/crash.log
 terraform/crash.*.log
 terraform/.terraformrc
 terraform/terraform.rc
-
+terraform/.terraform.lock.hcl
 # SSH keys
 *.pem
 *.key
